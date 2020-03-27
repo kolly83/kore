@@ -23,10 +23,9 @@ import (
 )
 
 const (
-	completeMe = `
-#! /bin/bash
+	completeMe = `#!/bin/bash
 
-: ${PROG:=$(basename ${BASH_SOURCE})}
+PROG=korectl
 
 _cli_bash_autocomplete() {
   if [[ "${COMP_WORDS[0]}" != "source" ]]; then
@@ -48,12 +47,28 @@ unset PROG
 `
 )
 
+var (
+	autocompleteLongDescription = `
+Provides bash autocompletion to make working with korectl quickier.
+
+# View the source code
+$ korectl autocomplete
+
+# Source into the shell (which can be placed into your ${HOME}/.bash_profile
+$ source <(korectl autocomplete)
+`
+)
+
+// GetAutoCompleteCommand returns the autocomplete command
 func GetAutoCompleteCommand(config *Config) *cli.Command {
 	return &cli.Command{
-		Name:  "autocomplete",
-		Usage: "Provides the autocomplete output so you can source into your shell",
+		Name:        "autocomplete",
+		Usage:       "Provides the autocomplete output so you can source into your bash shell",
+		Description: formatLongDescription(autocompleteLongDescription),
+
 		Action: func(ctx *cli.Context) error {
-			fmt.Printf("%s", completeMe)
+			fmt.Println(completeMe)
+
 			return nil
 		},
 	}
