@@ -40,6 +40,7 @@ import (
 
 	yml "github.com/ghodss/yaml"
 	log "github.com/sirupsen/logrus"
+	"github.com/urfave/cli/v2"
 	yaml "gopkg.in/yaml.v2"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -56,6 +57,45 @@ type Document struct {
 var (
 	hostnameRegex = regexp.MustCompile(`^https?://([0-9a-zA-Z\.]+)|([0-9]{1,3}\.){3,3}[0-9]{1,3}(:[0-9]+)?$`)
 )
+
+// DefaultCompletion injects the completion if not there
+func DefaultCompletion(commands ...*cli.Command) []*cli.Command {
+	for _, x := range commands {
+		if x.BashComplete == nil {
+			x.BashComplete = DefaultCompletionHandler(x)
+		}
+	}
+
+	return commands
+}
+
+// DefaultCompletionHandler returns the default bash completion
+func DefaultCompletionHandler(cmd *cli.Command) func(*cli.Context) {
+	return func(ctx *cli.Context) {
+		if cmd == nil {
+			for _, x := range ctx.App.Commands {
+				if !x.Hidden {
+					fmt.Println(x.Name)
+				}
+			}
+		} else {
+			// @step: show the subcommands first
+			for _, x := range cmd.Subcommands {
+				if !x.Hidden {
+					fmt.Println(x.Name)
+				}
+			}
+			// @step: show the flags of the current command
+			for _, x := range ctx.Command.Flags {
+				fmt.Printf("--%s\n", x.Names()[0])
+			}
+		}
+		// @step: show the global flags
+		for _, x := range ctx.App.Flags {
+			fmt.Printf("--%s\n", x.Names()[0])
+		}
+	}
+}
 
 // IsValidHostname checks the endpoint is valid
 func IsValidHostname(endpoint string) bool {

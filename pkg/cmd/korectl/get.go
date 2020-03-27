@@ -94,6 +94,6 @@ func GetGetCommand(config *Config) *cli.Command {
 		Usage:       "Retrieves one or more resources from the api",
 		Description: formatLongDescription(getLongDescription),
 		ArgsUsage:   "[TYPE] [NAME]",
-		Subcommands: commands,
+		Subcommands: DefaultCompletion(commands...),
 	}
 }

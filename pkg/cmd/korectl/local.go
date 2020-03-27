@@ -20,17 +20,23 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-const localEndpoint string = "http://127.0.0.1:10080"
-const localManifests string = "./manifests/local"
-const localCompose string = "./hack/compose"
+const (
+	localEndpoint  string = "http://127.0.0.1:10080"
+	localManifests string = "./manifests/local"
+	localCompose   string = "./hack/compose"
+)
 
+// GetLocalCommand return local command
 func GetLocalCommand(config *Config) *cli.Command {
-	cmd := &cli.Command{
+	commands := append([]*cli.Command{
+		GetLocalConfigureSubCommand(config),
+		GetLocalLogsSubCommand(config),
+	}, GetLocalRunSubCommands(config)...)
+
+	return &cli.Command{
 		Name:  "local",
 		Usage: "Used to configure and run a local instance of Kore.",
+
+		Subcommands: DefaultCompletion(commands...),
 	}
-	cmd.Subcommands = append(cmd.Subcommands, GetLocalConfigureSubCommand(config))
-	cmd.Subcommands = append(cmd.Subcommands, GetLocalRunSubCommands(config)...)
-	cmd.Subcommands = append(cmd.Subcommands, GetLocalLogsSubCommand(config))
-	return cmd
 }

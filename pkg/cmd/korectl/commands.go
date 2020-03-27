@@ -22,7 +22,7 @@ import (
 
 // GetCommands returns all the commands
 func GetCommands(config *Config) []*cli.Command {
-	return []*cli.Command{
+	return DefaultCompletion(
 		GetLoginCommand(config),
 		GetLogoutCommand(config),
 		GetProfilesCommand(config),
@@ -36,5 +36,5 @@ func GetCommands(config *Config) []*cli.Command {
 		GetGetCommand(config),
 		GetWhoamiCommand(config),
 		GetKubeconfigCommand(config),
-	}
+	)
 }

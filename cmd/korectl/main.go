@@ -62,6 +62,7 @@ func Main(args []string, writer, errWriter io.Writer) (int, error) {
 		Usage:                "korectl provides a cli for the " + version.Prog,
 		Version:              version.Version(),
 		EnableBashCompletion: true,
+		BashComplete:         korectl.DefaultCompletionHandler(nil),
 
 		OnUsageError: func(context *cli.Context, err error, _ bool) error {
 			return err

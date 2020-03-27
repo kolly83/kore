@@ -37,15 +37,7 @@ func GetCreateCommand(config *Config) *cli.Command {
 		Usage:       "Creates various objects",
 		Description: formatLongDescription(createLongDescription),
 		ArgsUsage:   "[TYPE] [NAME]",
-		Subcommands: []*cli.Command{
-			GetCreateTeamCommand(config),
-			GetCreateTeamMemberCommand(config),
-			GetCreateAllocation(config),
-			GetCreateGCPCommand(config),
-			GetCreateSecretCommand(config),
-			GetCreateClusterCommand(config),
-			GetCreateNamespaceCommand(config),
-		},
+
 		Before: func(ctx *cli.Context) error {
 			if !ctx.Args().Present() {
 				_ = cli.ShowSubcommandHelp(ctx)
@@ -53,5 +45,15 @@ func GetCreateCommand(config *Config) *cli.Command {
 			}
 			return nil
 		},
+
+		Subcommands: DefaultCompletion(
+			GetCreateTeamCommand(config),
+			GetCreateTeamMemberCommand(config),
+			GetCreateAllocation(config),
+			GetCreateGCPCommand(config),
+			GetCreateSecretCommand(config),
+			GetCreateClusterCommand(config),
+			GetCreateNamespaceCommand(config),
+		),
 	}
 }

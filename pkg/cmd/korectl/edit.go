@@ -29,6 +29,7 @@ Example to edit a team:
   $ korectl edit team a-team
 `
 
+// GetEditCommand returns the edit command
 func GetEditCommand(config *Config) *cli.Command {
 	return &cli.Command{
 		Name:        "edit",
@@ -36,9 +37,9 @@ func GetEditCommand(config *Config) *cli.Command {
 		Description: formatLongDescription(editLongDescription),
 		ArgsUsage:   "[TYPE] [NAME]",
 
-		Subcommands: []*cli.Command{
+		Subcommands: DefaultCompletion(
 			GetEditTeamCommand(config),
-		},
+		),
 
 		Before: func(ctx *cli.Context) error {
 			if !ctx.Args().Present() {

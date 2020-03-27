@@ -50,9 +50,9 @@ func GetDeleteCommand(config *Config) *cli.Command {
 				Usage:   "The path to the file containing the resources definitions `PATH`",
 			},
 		},
-		Subcommands: []*cli.Command{
+		Subcommands: DefaultCompletion(
 			GetDeleteTeamMemberCommand(config),
-		},
+		),
 
 		Before: func(ctx *cli.Context) error {
 			if !ctx.IsSet("file") && !ctx.Args().Present() {
@@ -61,6 +61,7 @@ func GetDeleteCommand(config *Config) *cli.Command {
 			}
 			return nil
 		},
+
 		Action: func(ctx *cli.Context) error {
 			team := ctx.String("team")
 

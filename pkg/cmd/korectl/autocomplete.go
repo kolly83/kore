@@ -22,40 +22,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-const (
-	completeMe = `#!/bin/bash
-
-PROG=korectl
-
-_cli_bash_autocomplete() {
-  if [[ "${COMP_WORDS[0]}" != "source" ]]; then
-    local cur opts base
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    if [[ "$cur" == "-"* ]]; then
-      opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD} ${cur} --generate-bash-completion )
-    else
-      opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD} --generate-bash-completion )
-    fi
-    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-    return 0
-  fi
-}
-
-complete -o bashdefault -o default -o nospace -F _cli_bash_autocomplete $PROG
-unset PROG
-`
-)
-
 var (
 	autocompleteLongDescription = `
 Provides bash autocompletion to make working with korectl quickier.
 
 # View the source code
-$ korectl autocomplete
+$ korectl autocomplete bash
 
 # Source into the shell (which can be placed into your ${HOME}/.bash_profile
-$ source <(korectl autocomplete)
+$ source <(korectl autocomplete bash)
 `
 )
 
@@ -66,10 +41,30 @@ func GetAutoCompleteCommand(config *Config) *cli.Command {
 		Usage:       "Provides the autocomplete output so you can source into your bash shell",
 		Description: formatLongDescription(autocompleteLongDescription),
 
-		Action: func(ctx *cli.Context) error {
-			fmt.Println(completeMe)
-
-			return nil
+		Subcommands: []*cli.Command{
+			{
+				Name:  "bash",
+				Usage: "generates the bash auto completion",
+				Action: func(ctx *cli.Context) error {
+					return printAutocompletion(ctx.Command.Name)
+				},
+			},
+			{
+				Name:  "zsh",
+				Usage: "generates the zsh autocompletion",
+				Action: func(ctx *cli.Context) error {
+					return printAutocompletion(ctx.Command.Name)
+				},
+			},
 		},
 	}
+}
+
+// printAutocompletion prints the source code
+func printAutocompletion(name string) error {
+	if code, found := completions[name]; found {
+		fmt.Println(code)
+	}
+
+	return nil
 }
