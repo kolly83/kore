@@ -195,6 +195,21 @@ func (t *gkeCtrl) Reconcile(request reconcile.Request) (reconcile.Result, error)
 			return reconcile.Result{RequeueAfter: 30 * time.Second}, nil
 		}
 
+		// @step: add/remove any new node groups
+		updatingNodePools, err := client.UpdateNodePools(ctx)
+		if err != nil {
+			logger.WithError(err).Error("attempting to update node pools")
+
+			return reconcile.Result{}, err
+		}
+		if updatingNodePools {
+			logger.Debug("cluster is performing a node pool update")
+
+			resource.Status.Status = core.PendingStatus
+
+			return reconcile.Result{RequeueAfter: 30 * time.Second}, nil
+		}
+
 		// @step: enable the cloud-nat is required
 		if resource.Spec.EnablePrivateNetwork {
 			logger.Info("cluster has private networking enabled, ensuring a cloud-nat")
