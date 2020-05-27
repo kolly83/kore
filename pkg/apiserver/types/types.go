@@ -36,3 +36,9 @@ type Health struct {
 	// Healthy is true if the service is healthy.
 	Healthy bool `json:"healthy"`
 }
+
+// Vault provides key value pairs of any stored information
+type Vault struct {
+	Key   string `json:"key,omitempty"`
+	Value string `json:"value,omitempty"`
+}

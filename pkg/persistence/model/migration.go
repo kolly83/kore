@@ -28,6 +28,10 @@ func Migrations(db *gorm.DB) error {
 	db.AutoMigrate(Member{})
 	db.AutoMigrate(Team{})
 	db.AutoMigrate(User{})
+	db.AutoMigrate(Vault{})
+
+	db.Model(&Vault{}).
+		AddIndex("idx_users_name", "username")
 
 	db.Model(&User{}).
 		AddIndex("idx_users_name", "username")
