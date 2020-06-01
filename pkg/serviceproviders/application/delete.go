@@ -42,7 +42,7 @@ func (p Provider) Delete(
 		return reconcile.Result{}, nil
 	}
 
-	config, err := getAppConfiguration(service)
+	config, err := getAppConfiguration(ctx, service)
 	if err != nil {
 		return reconcile.Result{}, err
 	}
