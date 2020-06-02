@@ -184,6 +184,7 @@ class ServicesTab extends React.Component {
                     refreshMs={10000}
                     propsResourceDataKey="service"
                     resourceApiPath={`/teams/${team.metadata.name}/services/${service.metadata.name}`}
+                    style={{ paddingTop: 0, paddingBottom: '5px' }}
                   />
                   {!service.deleted && filteredServiceCredentials.length > 0 && this.serviceCredentialList({ serviceCredentials: filteredServiceCredentials })}
                   {!service.deleted && idx < services.length - 1 && <Divider />}
