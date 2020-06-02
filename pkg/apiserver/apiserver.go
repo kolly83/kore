@@ -24,7 +24,6 @@ import (
 	"github.com/appvia/kore/pkg/apiserver/filters"
 	"github.com/appvia/kore/pkg/kore"
 	"github.com/appvia/kore/pkg/utils"
-	"github.com/appvia/kore/pkg/utils/validation"
 
 	restful "github.com/emicklei/go-restful"
 	restfulspec "github.com/emicklei/go-restful-openapi"
@@ -40,43 +39,12 @@ type server struct {
 	store kore.Interface
 }
 
-// withStandardErrors adds the standard internal server error (500) result to the route.
-func withStandardErrors(rb *restful.RouteBuilder) *restful.RouteBuilder {
-	return rb.
-		Returns(http.StatusInternalServerError, "A generic API error containing the cause of the error", Error{})
-}
-
-// withValidationErrors adds the standard bad request (400) validation error result to the route.
-func withValidationErrors(rb *restful.RouteBuilder) *restful.RouteBuilder {
-	return rb.
-		Returns(http.StatusBadRequest, "Validation error of supplied parameters/body", validation.Error{})
-}
-
-// withAuthErrors adds the standard unauthenticated (401) and forbidden (403) results to the route.
-func withAuthErrors(rb *restful.RouteBuilder) *restful.RouteBuilder {
-	return rb.
-		Returns(http.StatusUnauthorized, "If not authenticated", nil).
-		Returns(http.StatusForbidden, "If authenticated but not authorized", nil)
-}
-
-// withAllErrors is a shorthand to add all standard, validation, and auth results to the route.
-func withAllErrors(rb *restful.RouteBuilder) *restful.RouteBuilder {
-	return withValidationErrors(withAuthErrors(withStandardErrors(rb)))
-}
-
-// withAllNonValidationErrors is a shorthand to add all standard and auth results to the route but not validation.
-func withAllNonValidationErrors(rb *restful.RouteBuilder) *restful.RouteBuilder {
-	return withAuthErrors(withStandardErrors(rb))
-}
-
 // New returns a new api server for the kore
 func New(kore kore.Interface, config Config) (Interface, error) {
-	// @step: verify the configuration
 	if err := config.isValid(); err != nil {
 		return nil, fmt.Errorf("invalid api config: %s", err)
 	}
 
-	// @step: for now we can use the default container
 	c := restful.DefaultContainer
 	c.Filter(filters.DefaultMetrics.Filter)
 

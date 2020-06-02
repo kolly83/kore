@@ -254,5 +254,12 @@ func Options() []cli.Flag {
 			Usage:   "Indicates the kubernetes controller should check the underlying provider status `BOOL`",
 			EnvVars: []string{"ENABLE_CLUSTER_PROVIDER_CHECK"},
 		},
+
+		&cli.BoolFlag{
+			Name:    "enable-profiling",
+			Value:   false,
+			Usage:   "Indicates we should enable the pprof profile endpoints `BOOL`",
+			EnvVars: []string{"ENABLE_PROFILING"},
+		},
 	}
 }

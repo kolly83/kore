@@ -74,6 +74,7 @@ func invoke(ctx *cli.Context) error {
 			CertificateAuthority:       ctx.String("certificate-authority"),
 			CertificateAuthorityKey:    ctx.String("certificate-authority-key"),
 			EnableClusterProviderCheck: ctx.Bool("enable-cluster-provider-check"),
+			EnableProfiling:            ctx.Bool("enable-profiling"),
 			FeatureGates:               featuresGates,
 			HMAC:                       ctx.String("kore-hmac"),
 			IDPClientID:                ctx.String("idp-client-id"),
