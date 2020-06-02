@@ -245,6 +245,16 @@ type ClientService interface {
 
 	FindProjectClaims(params *FindProjectClaimsParams, authInfo runtime.ClientAuthInfoWriter) (*FindProjectClaimsOK, error)
 
+	Func1(params *Func1Params, authInfo runtime.ClientAuthInfoWriter) (*Func1OK, error)
+
+	Func2(params *Func2Params, authInfo runtime.ClientAuthInfoWriter) (*Func2OK, error)
+
+	Func3(params *Func3Params, authInfo runtime.ClientAuthInfoWriter) (*Func3OK, error)
+
+	Func4(params *Func4Params, authInfo runtime.ClientAuthInfoWriter) (*Func4OK, error)
+
+	Func5(params *Func5Params, authInfo runtime.ClientAuthInfoWriter) (*Func5OK, error)
+
 	UpdateEKSVPC(params *UpdateEKSVPCParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateEKSVPCOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -4034,6 +4044,181 @@ func (a *Client) FindProjectClaims(params *FindProjectClaimsParams, authInfo run
 	// unexpected success response
 	unexpectedSuccess := result.(*FindProjectClaimsDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  Func1 provides a profiling index
+*/
+func (a *Client) Func1(params *Func1Params, authInfo runtime.ClientAuthInfoWriter) (*Func1OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFunc1Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "func1",
+		Method:             "GET",
+		PathPattern:        "/debug/pprof",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &Func1Reader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*Func1OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for func1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  Func2 provides the profiling cmdline
+*/
+func (a *Client) Func2(params *Func2Params, authInfo runtime.ClientAuthInfoWriter) (*Func2OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFunc2Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "func2",
+		Method:             "GET",
+		PathPattern:        "/debug/pprof/cmdline",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &Func2Reader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*Func2OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for func2: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  Func3 provides the profiling enrtypoint
+*/
+func (a *Client) Func3(params *Func3Params, authInfo runtime.ClientAuthInfoWriter) (*Func3OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFunc3Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "func3",
+		Method:             "GET",
+		PathPattern:        "/debug/pprof/profile",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &Func3Reader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*Func3OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for func3: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  Func4 provides the pprof symbols
+*/
+func (a *Client) Func4(params *Func4Params, authInfo runtime.ClientAuthInfoWriter) (*Func4OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFunc4Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "func4",
+		Method:             "GET",
+		PathPattern:        "/debug/pprof/symbols",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &Func4Reader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*Func4OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for func4: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  Func5 provides the pprof trace
+*/
+func (a *Client) Func5(params *Func5Params, authInfo runtime.ClientAuthInfoWriter) (*Func5OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewFunc5Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "func5",
+		Method:             "GET",
+		PathPattern:        "/debug/pprof/trace",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &Func5Reader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*Func5OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for func5: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
