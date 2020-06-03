@@ -119,6 +119,10 @@ spec:
           {{- end }}
           - name: VERBOSE
             value: "{{ .Values.api.verbose }}"
+          {{- if .Values.api.enable_profiling }}
+          - name: ENABLE_PROFILING
+            value: "true"
+          {{- end }}
         volumeMounts:
         - name: ca
           readOnly: true
