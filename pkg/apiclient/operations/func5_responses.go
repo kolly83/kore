@@ -45,7 +45,7 @@ type Func5OK struct {
 }
 
 func (o *Func5OK) Error() string {
-	return fmt.Sprintf("[GET /debug/pprof/trace][%d] func5OK ", 200)
+	return fmt.Sprintf("[GET /api/v1alpha1/debug/pprof/trace][%d] func5OK ", 200)
 }
 
 func (o *Func5OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

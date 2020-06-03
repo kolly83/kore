@@ -4058,7 +4058,7 @@ func (a *Client) Func1(params *Func1Params, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "func1",
 		Method:             "GET",
-		PathPattern:        "/debug/pprof",
+		PathPattern:        "/api/v1alpha1/debug/pprof",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -4093,7 +4093,7 @@ func (a *Client) Func2(params *Func2Params, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "func2",
 		Method:             "GET",
-		PathPattern:        "/debug/pprof/cmdline",
+		PathPattern:        "/api/v1alpha1/debug/pprof/cmdline",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -4128,7 +4128,7 @@ func (a *Client) Func3(params *Func3Params, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "func3",
 		Method:             "GET",
-		PathPattern:        "/debug/pprof/profile",
+		PathPattern:        "/api/v1alpha1/debug/pprof/profile",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -4163,7 +4163,7 @@ func (a *Client) Func4(params *Func4Params, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "func4",
 		Method:             "GET",
-		PathPattern:        "/debug/pprof/symbols",
+		PathPattern:        "/api/v1alpha1/debug/pprof/symbols",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -4198,7 +4198,7 @@ func (a *Client) Func5(params *Func5Params, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "func5",
 		Method:             "GET",
-		PathPattern:        "/debug/pprof/trace",
+		PathPattern:        "/api/v1alpha1/debug/pprof/trace",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

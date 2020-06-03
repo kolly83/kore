@@ -45,7 +45,7 @@ type Func1OK struct {
 }
 
 func (o *Func1OK) Error() string {
-	return fmt.Sprintf("[GET /debug/pprof][%d] func1OK ", 200)
+	return fmt.Sprintf("[GET /api/v1alpha1/debug/pprof][%d] func1OK ", 200)
 }
 
 func (o *Func1OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
