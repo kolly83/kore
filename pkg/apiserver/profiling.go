@@ -38,17 +38,18 @@ type profilingHandler struct {
 
 // Register is called by the api server on registration
 func (p *profilingHandler) Register(i kore.Interface, builder utils.PathBuilder) (*restful.WebService, error) {
-	path := "/debug"
+	path := builder.Add("debug")
+
 	p.Interface = i
 
 	log.WithFields(log.Fields{
 		"path": path,
-	}).Info("registering the planpolicies webservice")
+	}).Info("registering the profiling webservice")
 
 	ws := &restful.WebService{}
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
-	ws.Path(path)
+	ws.Path(path.Base())
 
 	ws.Route(
 		ws.GET("/pprof").To(func(req *restful.Request, resp *restful.Response) {
@@ -88,6 +89,11 @@ func (p *profilingHandler) Name() string {
 	return "profiling"
 }
 
+// Enabled returns if the handler is enabled
+func (p *profilingHandler) Enabled() bool {
+	return p.Config().EnableProfiling
+}
+
 // EnableAudit defaults to audit everything.
 func (p *profilingHandler) EnableAudit() bool {
 	return false
@@ -98,12 +104,7 @@ func (p *profilingHandler) EnableLogging() bool {
 	return false
 }
 
-// EnableAuthentication defaults to yes we do
-func (p *profilingHandler) EnableAuthentication() bool {
-	return false
-}
-
-// Enabled returns if the handler is enabled
-func (p *profilingHandler) Enabled() bool {
-	return p.Config().EnableProfiling
+// EnableAdminsOnly requires the user is a member of the admin group
+func (p *profilingHandler) EnableAdminsOnly() bool {
+	return true
 }
