@@ -20,10 +20,12 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/http/pprof"
 
 	"github.com/appvia/kore/pkg/apiserver/filters"
 	"github.com/appvia/kore/pkg/kore"
 	"github.com/appvia/kore/pkg/utils"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	restful "github.com/emicklei/go-restful"
 	restfulspec "github.com/emicklei/go-restful-openapi"
@@ -142,6 +144,44 @@ func (h *server) Run(ctx context.Context) error {
 			}).Fatal("failed to start the http server")
 		}
 	}()
+
+	if h.EnableMetrics {
+		go func() {
+			addr := fmt.Sprintf(":%d", h.MetricsPort)
+			s := &http.Server{Addr: addr, Handler: promhttp.Handler()}
+
+			if err := s.ListenAndServe(); err != nil {
+				if err != nil {
+					log.WithFields(log.Fields{
+						"error": err.Error(),
+					}).Fatal("failed to start the metrics http server")
+				}
+			}
+		}()
+	}
+
+	if h.EnableProfiling {
+		go func() {
+			addr := fmt.Sprintf(":%d", h.ProfilingPort)
+
+			mux := http.NewServeMux()
+			mux.HandleFunc("/debug/pprof/", pprof.Index)
+			mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+			mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+			mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+			mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
+
+			s := &http.Server{Addr: addr, Handler: mux}
+
+			if err := s.ListenAndServe(); err != nil {
+				if err != nil {
+					log.WithFields(log.Fields{
+						"error": err.Error(),
+					}).Fatal("failed to start the profiling http server")
+				}
+			}
+		}()
+	}
 
 	return nil
 }

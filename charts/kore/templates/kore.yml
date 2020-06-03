@@ -44,7 +44,7 @@ spec:
         service: {{ include "kore.name" . }}-apiserver
 {{ include "kore.labels" . | indent 8}}
       annotations:
-        prometheus.io/port: {{ .Values.api.port | quote }}
+        prometheus.io/port: {{ .Values.api.metrics_port | quote }}
         prometheus.io/scheme: "http"
         prometheus.io/scrape: "true"
     spec:
@@ -122,6 +122,14 @@ spec:
           {{- if .Values.api.enable_profiling }}
           - name: ENABLE_PROFILING
             value: "true"
+          - name: PROFILING_PORT
+            value: {{ .Values.api.profiling_port }}
+          {{- end }}
+          {{- if .Values.api.enable_metrics }}
+          - name: ENABLE_METRICS
+            value: "true"
+          - name: METRICS_PORT
+            value: {{ .Values.api.metrics_port }}
           {{- end }}
         volumeMounts:
         - name: ca

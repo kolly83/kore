@@ -40,6 +40,9 @@ api:
     annotations: {}
   port: 10080
   enable_profiling: false
+  enable_metrics: true
+  metrics_port: 9090
+  profiling_port: 9091
   hostPort: ""
   serviceType: ClusterIP
   image: quay.io/appvia/kore-apiserver

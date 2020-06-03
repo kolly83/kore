@@ -220,6 +220,12 @@ func Options() []cli.Flag {
 			Value:   9090,
 			EnvVars: []string{"METRICS_PORT"},
 		},
+		&cli.IntFlag{
+			Name:    "profiling-port",
+			Usage:   "the port which profiling is service on `PORT`",
+			Value:   9091,
+			EnvVars: []string{"PROFILING_PORT"},
+		},
 		&cli.StringFlag{
 			Name:    "meta-store-url",
 			Usage:   "the url for the meta store i.e. redis://user:pass@hostname `URL`",
@@ -260,6 +266,12 @@ func Options() []cli.Flag {
 			Value:   false,
 			Usage:   "Indicates we should enable the pprof profile endpoints `BOOL`",
 			EnvVars: []string{"ENABLE_PROFILING"},
+		},
+		&cli.BoolFlag{
+			Name:    "enable-metrics",
+			Value:   false,
+			Usage:   "Indicates we should enable the prometheus metrics `BOOL`",
+			EnvVars: []string{"ENABLE_METRICS"},
 		},
 	}
 }
