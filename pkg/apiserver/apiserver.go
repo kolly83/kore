@@ -20,7 +20,9 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"net/http/pprof"
+
+	// importing the profiling
+	_ "net/http/pprof"
 
 	"github.com/appvia/kore/pkg/apiserver/filters"
 	"github.com/appvia/kore/pkg/kore"
@@ -122,8 +124,10 @@ func (h server) BaseURI() string {
 // Run starts the api up
 func (h *server) Run(ctx context.Context) error {
 	log.WithFields(log.Fields{
-		"listen":      h.Listen,
-		"tls_enabled": h.UseTLS(),
+		"enable_metrics":   h.EnableMetrics,
+		"enable_profiling": h.EnableProfiling,
+		"listen":           h.Listen,
+		"tls_enabled":      h.UseTLS(),
 	}).Info("starting the kore-apiserver")
 
 	// @step: setup the http handler
@@ -163,15 +167,7 @@ func (h *server) Run(ctx context.Context) error {
 	if h.EnableProfiling {
 		go func() {
 			addr := fmt.Sprintf(":%d", h.ProfilingPort)
-
-			mux := http.NewServeMux()
-			mux.HandleFunc("/debug/pprof/", pprof.Index)
-			mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
-			mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
-			mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
-			mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
-
-			s := &http.Server{Addr: addr, Handler: mux}
+			s := &http.Server{Addr: addr, Handler: http.DefaultServeMux}
 
 			if err := s.ListenAndServe(); err != nil {
 				if err != nil {

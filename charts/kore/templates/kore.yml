@@ -59,6 +59,14 @@ spec:
             {{- if .Values.api.hostPort }}
             hostPort: {{ .Values.api.hostPort }}
             {{- end }}
+          {{- if .Values.api.enable_metrics }}
+          - name: metrics
+            containerPort: {{ .Values.api.metrics_port }}
+          {{- end }}
+          {{- if .Values.api.enable_profiling }}
+          - name: pprof
+            containerPort: {{ .Values.api.profiling_port }}
+          {{- end }}
         envFrom:
           - secretRef:
               name: {{ include "kore.name" . }}-mysql

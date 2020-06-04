@@ -248,91 +248,6 @@
         }
       }
     },
-    "/api/v1alpha1/debug/pprof": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Provides a profiling index",
-        "operationId": "func1",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1alpha1/debug/pprof/cmdline": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Provides the profiling cmdline",
-        "operationId": "func2",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1alpha1/debug/pprof/profile": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Provides the profiling enrtypoint",
-        "operationId": "func3",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1alpha1/debug/pprof/symbols": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Provides the pprof symbols",
-        "operationId": "func4",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1alpha1/debug/pprof/trace": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Provides the pprof trace",
-        "operationId": "func5",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1alpha1/idp/clients/{name}": {
       "put": {
         "consumes": [
@@ -7209,11 +7124,11 @@
     },
     "v1.StaticOIDCIDP": {
       "required": [
+        "clientID",
         "clientSecret",
         "issuer",
         "clientScopes",
-        "userClaims",
-        "clientID"
+        "userClaims"
       ],
       "properties": {
         "clientID": {

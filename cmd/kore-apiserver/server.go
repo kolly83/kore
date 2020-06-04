@@ -52,7 +52,6 @@ func invoke(ctx *cli.Context) error {
 		return err
 	}
 
-	// @step: construct the server config
 	config := server.Config{
 		APIServer: apiserver.Config{
 			EnableDex:       ctx.Bool("enable-dex"),

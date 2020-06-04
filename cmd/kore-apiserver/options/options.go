@@ -269,7 +269,7 @@ func Options() []cli.Flag {
 		},
 		&cli.BoolFlag{
 			Name:    "enable-metrics",
-			Value:   false,
+			Value:   true,
 			Usage:   "Indicates we should enable the prometheus metrics `BOOL`",
 			EnvVars: []string{"ENABLE_METRICS"},
 		},
